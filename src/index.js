@@ -1,17 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./Components/App";
+import { store } from "./Components/store";
+import { Provider } from "react-redux";
+import { BrowserRouter as Router } from "react-router-dom";
+import { fetchPosts } from "./Features/posts/PostSlice";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import { fetchUsers } from "./Features/users/UserSlice";
+////dispatching our users and the posts directly to the store
+store.dispatch(fetchPosts());
+store.dispatch(fetchUsers());
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <Provider store={store}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
